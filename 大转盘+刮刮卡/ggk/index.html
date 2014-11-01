@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<title>刮刮卡</title>
+		<link href="../statics/css/activity-style.css" rel="stylesheet" type="text/css">
+	</head>
+	<script type="text/javascript">
+		function loading(canvas, options) {
+			this.canvas = canvas;
+			if (options) {
+				this.radius = options.radius || 12;
+				this.circleLineWidth = options.circleLineWidth || 4;
+				this.circleColor = options.circleColor || 'lightgray';
+				this.moveArcColor = options.moveArcColor || 'gray';
+			} else {
+				this.radius = 12;
+				this.circelLineWidth = 4;
+				this.circleColor = 'lightgray';
+				this.moveArcColor = 'gray';
+			}
+		}
+		loading.prototype = {
+			show: function() {
+				var canvas = this.canvas;
+				if (!canvas.getContext) return;
+				if (canvas.__loading) return;
+				canvas.__loading = this;
+				var ctx = canvas.getContext('2d');
+				var radius = this.radius;
+				var me = this;
+				var rotatorAngle = Math.PI * 1.5;
+				var step = Math.PI / 6;
+				canvas.loadingInterval = setInterval(function() {
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					var lineWidth = me.circleLineWidth;
+					var center = {
+						x: canvas.width / 2,
+						y: canvas.height / 2
+					};
+
+					ctx.beginPath();
+					ctx.lineWidth = lineWidth;
+					ctx.strokeStyle = me.circleColor;
+					ctx.arc(center.x, center.y + 20, radius, 0, Math.PI * 2);
+					ctx.closePath();
+					ctx.stroke();
+					//在圆圈上面画小圆   
+					ctx.beginPath();
+					ctx.strokeStyle = me.moveArcColor;
+					ctx.arc(center.x, center.y + 20, radius, rotatorAngle, rotatorAngle + Math.PI * .45);
+					ctx.stroke();
+					rotatorAngle += step;
+
+				},
+				100);
+			},
+			hide: function() {
+				var canvas = this.canvas;
+				canvas.__loading = false;
+				if (canvas.loadingInterval) {
+					window.clearInterval(canvas.loadingInterval);
+				}
+				var ctx = canvas.getContext('2d');
+				if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+			}
+		};
+	</script>
+	</head>
+	<body data-role="page" class="activity-scratch-card-winning">
+		<script src="../statics/js/jquery.js" type="text/javascript"></script>
+		<script src="../statics/js/wScratchPad.js" type="text/javascript"></script>
+		<div class="main">
+			<div class="cover">
+				<img src="../statics/images/activity-scratch-card-bannerbg.png">
+				<div id="prize">
+				</div>
+				<div id="scratchpad">
+				</div>
+			</div>
+			<div class="content">
+				<div id="zjl" style="display:none" class="boxcontent boxwhite">
+					<div class="box">
+						<div class="title-red">
+							<span>
+								恭喜你中奖了
+							</span>
+						</div>
+						<div class="Detail">
+							<p>
+								你中了：
+								<span class="red" id ="theAward"></span>
+							</p>
+							<p>
+								兑奖SN码：
+								<span class="red" id="sncode">
+									null
+								</span>
+							</p>
+							<p class="red"></p>
+							<p>
+								<input name="" class="px" id="tel" value="" type="text" placeholder="用户请输入您的手机号">
+							</p>
+							<p>
+								<p>
+									<input class="pxbtn" name="提 交" id="save-btn" type="button" value="用户提交">
+								</p>
+								<!--<p>
+									<input name="" class="px" id="parssword" type="password" value="" placeholder="商家输入兑奖密码">
+								</p>
+								<p>
+									<input class="pxbtn" name="提 交" id="save-btnn" type="button" value="商家提交">
+								</p>-->
+						</div>
+					</div>
+				</div>
+				<div class="boxcontent boxwhite">
+					<div class="box">
+						<div class="title-brown">
+							<span>
+								奖项设置：
+							</span>
+						</div>
+						<div class="Detail">
+							<p>
+								一等奖： iPhone5S。奖品数量：100
+							</p>
+							<p>
+								二等奖： iPad5 。奖品数量：500
+							</p>
+							<p>
+								三等奖： iPad mini 。奖品数量：1000
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="boxcontent boxwhite">
+					<div class="box">
+						<div class="title-brown">
+							活动说明：
+						</div>
+						<div class="Detail">
+							<p class="red">
+								本次活动总共可以刮5次,你已经刮了0次,机会如果没用完重新进入本页面可以再刮!
+							</p>
+							<p>
+								亲，请点击进入刮刮奖活动页面，祝您好运哦！
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="clear:both;">
+			</div>
+		</div>
+		<script src="../statics/js/alert.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			window.sncode = "null";
+			window.prize = "谢谢参与";
+
+			var zjl = false;
+			var num = 0;
+			var goon = true;
+			$(function() {
+				$("#scratchpad").wScratchPad({
+					width: 150,
+					height: 40,
+					color: "#a9a9a7",
+					scratchMove: function() {
+						num++;
+						//alert(num);
+						
+						
+					/**中奖概率设置一(感觉这个也是随机均等的概率)	
+							if (num == 2) {
+							//一等奖机率10% 二等奖20% 三等奖30% 幸运奖40%
+							// Math.random()*99+1会返回一个 1-100 之间的随机数，Math.round然后再进行四舍五入操作，所以也是随机的
+							var randNum = Math.round(Math.random()*99+1)
+							alert(randNum);
+							if(randNum>=1 && randNum<=10){
+								var award = "一等奖";
+								zjl = true;
+							}
+							if(randNum>=11 && randNum<=30){
+								var award = "二等奖";
+								zjl = true;
+							}
+							if(randNum>=31 && randNum<=60){
+								var award = "三等奖";
+								zjl = true;
+							}
+							if(randNum>=61 && randNum<=100){
+								var award = "谢谢参与";
+							}
+							document.getElementById('prize').innerHTML = award;
+							$("#theAward").html(award);
+						}
+						**/
+					/**中奖概率设置二,推荐这个，这个还是蛮靠谱的
+					需求：有三句话a,b,c，对应的三种出现概率aa,bb,cc，根据概率设置多少，输出显示话语。
+					样例如下：
+					var a='我是大哥';
+					var b='我是二哥';
+					var c='我是三弟';
+					
+					aa=20%; //大哥的输出次数占20%
+					bb=30%; 
+					cc=50%;
+					
+					……//经过计算输出x,x可能是a,可能是b,可能是c，根据概率而定
+					alert(x);
+					**/	
+					 if (num == 2) {
+					 //代码开始:	
+					  var a = "一等奖";
+					  var b = "二等奖";
+					  var c = "三等奖";
+					  var d = "谢谢参与";
+					  var dd = 0.001;//一等奖千分之一的概奖
+					  var bb = 0.05;//二等奖百分之五的概率
+					  var cc = 0.1;//三等奖百分之十的概率
+					  var aa = 0.849;//未中奖84.9%的概率
+					
+					  var shows = [a, b, c,d];
+					  var prob = [aa, bb, cc,dd];
+					  var len = 1000;
+					  var probLen = [len*aa, len*bb, len*cc, len*dd];
+					  var ran = Math.random() * len;
+					  for(var i = 0; i < probLen.length; i++){
+					   var ranStart = 0;
+					   for(var j = 0; j < i; j++){
+						ranStart += probLen[j];
+					   }
+					   var ranEnd = ranStart + probLen[i];
+					
+					   if(ran > ranStart && ran <= ranEnd){
+						//命中
+						//alert(shows[i]);
+						
+								var award = shows[i];
+								if(shows[i]!='谢谢参与')
+								{
+									zjl = true;
+								}
+								
+								document.getElementById('prize').innerHTML = award;
+								$("#theAward").html(award);
+								
+								//获取当前日期的年月日是分秒
+								var myDate = new Date();
+								/**
+								myDate.getYear(); //获取当前年份(2位)
+								myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+								myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+								myDate.getDate(); //获取当前日(1-31)
+								myDate.getDay(); //获取当前星期X(0-6,0代表星期天)
+								myDate.getTime(); //获取当前时间(从1970.1.1开始的毫秒数)
+								myDate.getHours(); //获取当前小时数(0-23)
+								myDate.getMinutes(); //获取当前分钟数(0-59)
+								myDate.getSeconds(); //获取当前秒数(0-59)
+								myDate.getMilliseconds(); //获取当前毫秒数(0-999)
+								myDate.toLocaleDateString(); //获取当前日期
+								var mytime=myDate.toLocaleTimeString(); //获取当前时间
+								myDate.toLocaleString( ); //获取日期与时间
+								**/
+
+var sn=String(myDate.getFullYear())+String(myDate.getMonth())+String(myDate.getDate())+String(myDate.getHours())+String(myDate.getMinutes())+String(myDate.getSeconds())+String(myDate.getMilliseconds());
+							$("#sncode").html(sn);
+							
+						break;
+					   }
+					  }
+					  //代码结束
+						}
+						/**中奖概率设置三**/	
+						/**
+						if (num == 2) {
+							document.getElementById('prize').innerHTML = "谢谢参与";
+						}else if (num == 1) {
+							document.getElementById('prize').innerHTML = "一等奖";
+							zjl = true;
+						}else if (num == 4) {
+							document.getElementById('prize').innerHTML = "二等奖";
+							zjl = true;
+						}
+						**/
+						if (zjl && num > 10 && goon) {
+							//$("#zjl").fadeIn();
+							goon = false;
+
+							$("#zjl").slideToggle(500);
+							//$("#outercont").slideUp(500)
+						}
+					}
+				});
+
+				//$("#prize").html("谢谢参与");
+				//loadingObj.hide();
+				//$(".loading-mask").remove();
+			});
+
+			$("#save-btn").bind("click", function() {
+				var btn = $(this);
+				var tel = $("#tel").val();
+				if (tel == '') {
+					alert("请输入手机号");
+					return
+				}
+
+				var submitData = {
+					tid: 438,
+					code: $("#sncode").text(),
+					tel: tel,
+					action: "setTel"
+				};
+				/**
+				jQuery.post( url, [data], [callback], [type] ) ：使用POST方式来进行异步请求
+				参数：
+
+				url (String) : 发送请求的URL地址.
+				data (Map) : (可选) 要发送给服务器的数据，以 Key/value 的键值对形式表示。服务端index.php页面取data里的值时直接用:$_REQUEST['key值'],而不是$_REQUEST['data']
+				callback (Function) : (可选) 载入成功时回调函数(只有当Response的返回状态是success才是调用该方法)。
+				type (String) : (可选)官方的说明是：Type of data to be sent。其实应该为客户端请求的类型(JSON,XML,等等)
+				**/
+				$.post('index.php?ac=acw', submitData,
+				function(data) {
+					if (data.success == true) {
+						alert(data.msg);
+						$("#zjl").slideUp(500);
+						return
+					} else {}
+				},
+				"json")
+			});
+
+			// 保存数据
+			/**
+			$("#save-btnn").bind("click", function() {
+				//var btn = $(this);
+				var submitData = {
+					tid: 438,
+					code: $("#sncode").text(),
+					parssword: $("#parssword").val(),
+					action: "setTel"
+				};
+				$.post('index.php?ac=acw', submitData,
+				function(data) {
+					if (data.success == true) {
+						alert(data.msg);
+						if (data.changed == true) {
+							window.location.href = location.href;
+						}
+						return
+					} else {}
+				},
+				"json")
+			});
+			**/
+		</script>
+		
+	</body>
+
+</html>

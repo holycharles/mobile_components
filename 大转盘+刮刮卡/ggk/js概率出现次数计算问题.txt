@@ -1,0 +1,70 @@
+					js概率出现次数计算问题
+需求：有三句话a,b,c，对应的三种出现概率aa,bb,cc，根据概率设置多少，输出显示话语。
+
+样例如下：
+var a='我是大哥';
+var b='我是二哥';
+var c='我是三弟';
+
+aa=20%; //大哥的输出次数占20%
+bb=30%; 
+cc=50%;
+
+……//经过计算输出x,x可能是a,可能是b,可能是c，根据概率而定
+alert(x);
+
+请帮忙写出中间的实现步骤，谢谢~！
+
+//===============
+解决方案一
+//==============
+var a = "xxx1";
+  var b = "xxx2";
+  var c = "xxx3";
+  var aa = 0.2;
+  var bb = 0.3;
+  var cc = 0.5;
+
+  var shows = [a, b, c];
+  var prob = [aa, bb, cc];
+  var len = 1000;
+  var probLen = [len*aa, len*bb, len*cc];
+  var ran = Math.random() * len;
+  for(var i = 0; i < probLen.length; i++){
+   var ranStart = 0;
+   for(var j = 0; j < i; j++){
+    ranStart += probLen[j];
+   }
+   var ranEnd = ranStart + probLen[i];
+
+   if(ran > ranStart && ran <= ranEnd){
+    //命中
+    alert(shows[i]);
+    break;
+   }
+  }
+
+
+
+//===============
+解决方案二
+//==============
+<script>
+var a='我是大哥';
+var b='我是二哥';
+var c='我是三弟';
+var x=Math.floor(Math.random()()*10+1);//1-10之间随机数
+switch(x)
+{
+case 1:
+case 2:alert(a);break; //1和2时，弹出a，正好百分之20
+case 3:
+case 4:
+case 5:alert(b);break;  //3、4、5时弹出b，百分之30
+case 6:
+case 7:
+case 8:
+case 9:
+case 10:alert(c);break; //剩下的百分之50
+}
+</script>

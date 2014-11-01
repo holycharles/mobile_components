@@ -1,0 +1,101 @@
+				jQuery $.post $.ajax用法
+1.jQuery.post( url, [data], [callback], [type] ) ：使用POST方式来进行异步请求
+
+参数：
+
+url (String) : 发送请求的URL地址.
+
+data (Map) : (可选) 要发送给服务器的数据，以 Key/value 的键值对形式表示。服务端index.php页面取data里的值时直接用:$_REQUEST['key值'],而不是$_REQUEST['data']
+
+callback (Function) : (可选) 载入成功时回调函数(只有当Response的返回状态是success才是调用该方法)。
+
+type (String) : (可选)官方的说明是：Type of data to be sent。其实应该为客户端请求的类型(JSON,XML,等等)
+
+这是一个简单的 POST 请求功能以取代复杂 $.ajax 。请求成功时可调用回调函数。如果需要在出错时执行函数，请使用 $.ajax。示例代码：
+
+Ajax.aspx：
+Response.ContentType = "application/json";Response.Write("{result: '" + Request["Name"] + ",你好！(这消息来自服务器)'}");
+
+jQuery 代码：
+$.post("Ajax.aspx", { Action: "post", Name: "lulu" },     
+   function (data, textStatus){        
+    // data 可以是 xmlDoc, jsonObj, html, text, 等等.  
+    //this;
+    // 这个Ajax请求的选项配置信息，请参考jQuery.get()说到的this  
+   alert(data.result);        }, "json");
+
+点击提交：
+
+这里设置了请求的格式为"json"
+
+
+2.$.ajax()这个是jQuery 的底层 AJAX 实现。简单易用的高层实现见 $.get, $.post 等。
+这里有几个Ajax事件参数：beforeSend ，success ，complete ，error 。我们可以定义这些事件来很好的处理我们的每一次的Ajax请求。
+
+$.ajax({
+url: 'stat.php',
+
+type: 'POST',
+
+data:{Name:"keyun"},
+
+dataType: 'html',
+
+timeout: 1000,
+
+error: function(){alert('Error loading PHP document');},
+
+success: function(result){alert(result);}
+
+});
+
+//===================
+今天遇到一个jquery的post的小问题
+因为要批量删除，所以开始用循环的post到那个url，然后刷新本页
+这就出现问题了
+$("input[@name='qa_checkbox']").each(function()
+{
+    if($(this).attr('checked') == undefined)
+    {
+                
+    }
+    else
+    {
+        $.post(url,{Action:"POST"},function(data){alert(data);window.location.reload();}, "text");
+                
+    }
+})
+这么用的话 只能删除第一条数据
+
+$("input[@name='qa_checkbox']").each(function()
+{
+    if($(this).attr('checked') == undefined)
+    {
+                
+    }
+    else
+    {
+        $.post(url+$(this).val(),{Action:"POST"},function(data){alert(data);}, "text");
+                
+    }
+})
+
+window.location.reload();
+这样用的话，虽然可以删除，也能刷新本页，貌似reload是在post的function之前运行，但是post会报错，其中原因有待研究；
+
+最终想了折中的办法，如下:
+$("input[@name='qa_checkbox']").each(function()
+        {
+            if($(this).attr('checked') == undefined)
+            {
+                
+            }
+            else
+            {
+                url = url + $(this).val() + '_';
+                
+            }
+        })
+        $.post(url,{Action:"POST"},function(data){alert(data);window.location.reload();}, "text");
+    }
+把要删除的id连成字符串，用一次post处理，把reload放在post的function里 就没有问题了
