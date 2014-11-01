@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="jquery/jquery.mobile-1.4.3.css">
+<link rel="stylesheet" href="jquery/jquery.mobile.icons-1.4.3.css">
+<link rel="stylesheet" href="jquery/jquery.mobile.theme-1.4.3.css">
+<link rel="stylesheet" href="jquery/jquery.mobile.structure-1.4.3.css">
+<link rel="stylesheet" href="jquery/jquery.mobile.inline-png-1.4.3.css">
+<link rel="stylesheet" href="jquery/jquery.mobile.external-png-1.4.3.css">
+<script src="jquery/jquery-2.1.1.js"></script>
+<script src="jquery/jquery.mobile-1.4.3.js"></script>
+<script src="jquery/loading.js"></script>
+
+</head>
+
+<script>  
+
+$(document).ready(function (){
+	$("#data-transition").bind('click', function(){
+		window.location="./profile.html";
+	});
+});
+	  
+</script> 
+
+<body>
+
+  <div data-role="header" data-position="fixed">
+    <h1>Blue Contact</h1>
+    <form method="post" action="demoform.asp"> 
+    <a href="#" data-transition="fade"></a>
+    
+        <a href="#link" data-role="text" data-icon="search" data-iconpos="left" placeholder="Search Contact">  </a>  
+     <input type="text" placeholder="Search Contact">  
+  </div>
+
+
+    <div data-role="collapsible">
+    <h4>Student</h4>
+    <ul data-role="listview">
+      <li>
+        <a href="chat.html" data-ajax="false">
+        <img src="jquery/images/country/person1.jpg">
+        <h2>Lin Da Chuan</h2>
+        </a>
+      </li>
+       <li>
+        <a href="chat.html" data-ajax="false">
+        <img src="jquery/images/country/person2.jpg">
+        <h2>Liu Xiao Tao</h2>
+        </a>
+      </li>
+      <li>
+        <a href="chat.html" data-ajax="false">
+        <img src="jquery/images/country/person2.jpg">
+        <h2>Deng Chao</h2>
+        </a>
+      </li>
+      <li>
+        <a href="chat.html" data-ajax="false">
+        <img src="jquery/images/country/person2.jpg">
+        <h2>Ni Xin Hui</h2>
+        </a>
+      </li>
+      <li>
+        <a href="chat.html" data-ajax="false">
+        <img src="jquery/images/country/person2.jpg">
+        <h2>Liu Peng</h2>
+        </a>
+      </li>
+      <li>
+        <a href="chat.html" data-ajax="false">
+        <img src="jquery/images/country/person2.jpg">
+        <h2>Song Ze Ze</h2>
+        </a>
+      </li>
+      <li>
+        <a href="chat.html" data-ajax="false">
+        <img src="jquery/images/country/person2.jpg">
+        <h2>Jiang Yan</h2>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+    <div data-role="collapsible">
+    <h4>Colleague</h4>
+    <ul data-role="listview">
+       <li>
+        <a href="chat.html" data-ajax="false">
+        <img src="jquery/images/country/person2.jpg">
+        <h2>Jiang Yan</h2>
+        </a>
+      </li>
+       <li>
+        <a href="chat.html" data-ajax="false">
+        <img src="jquery/images/country/person2.jpg">
+        <h2>Jiang Yan</h2>
+        </a>
+      </li>
+    </ul>
+    </div>
+
+    <div data-role="collapsible">
+    <h4>Stranger</h4>
+    </div>
+  </div>
+  
+  
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar" data-iconpos="left">
+			<ul>
+				<li><a data-icon="plus" href="message.html" data-transition="fade" data-ajax="false">Message</a></li>
+                	<li><a data-icon="plus" href="#" class="ui-btn-active ui-state-persist" >Contact</a></li>
+				<li><a data-icon="plus" href="profile.html" data-transition="fade" data-ajax="false">Profile</a></li>
+                <li><a data-icon="plus" data-rel="popup" href="#popupSure" data-transition="pop">Log Out</a>
+<div data-role="popup" id="popupSure">
+	<p>Are you sure to log Out from Blue Contact?</p>
+	<div data-role="controlgroup" data-type="horizontal">
+ <div>
+
+ </div>
+    <button class="ui-btn ui-btn-b" id="btn_login">Sure</button>
+	<button class="ui-btn ui-btn-b" id="btn_login">Cancel</button>
+   
+</div>
+</li>
+			</ul>
+		</div>
+		<h4 style="display:none;">Footer</h4>
+	</div>
+</div>
+
+</body>
+</html>
