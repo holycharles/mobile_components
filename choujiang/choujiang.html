@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0; ">
+	<meta name="format-detection" content="telephone=no">
+	<title>聊天抽奖</title>
+	
+	<link rel="stylesheet" media="all" href="css/style.css">
+
+	
+</head>
+<body>
+	
+	<div id="header">
+		<div class="header_inside">
+			<strong id="visitor_number">123456</strong>  <span>人在玩<br>在线抽奖</span>
+			<p>山东齐鲁频道  每周六晚7点20分</p>
+		</div>
+	</div>
+
+
+	<div id="content">
+		<h1>拼人品，试手气，赢大奖！</h1>
+		<!-- <h1>恭喜您，中奖了！</h1>
+		<h1>很遗憾，未中奖！</h1> -->
+
+		<section class="guangjiang_area">
+			<div class="gua_area" id="guajiangqu"></div>
+			<div class="gua_txt"><img src="images/txt_znhy.png" height="60" width="310" alt=""></div>
+		</section>
+	</div>
+
+	<ul class="jp_list" id="jiangpinList">
+		<li>
+			<p><img src="images/jiangpin1.jpg" height="130" width="130" alt=""></p><span>小样乳酸</span>
+		</li>
+		<li>
+			<p><img src="images/jiangpin2.jpg" height="130" width="130" alt=""></p><span>苹果手机</span>
+		</li>
+		<li>
+			<p><img src="images/jiangpin3.jpg" height="130" width="130" alt=""></p><span>特斯拉</span>
+		</li>
+	</ul>
+
+	<form action="#" class="submit_info" id="submitForm">
+		<div class="submit_title">填写领奖信息</div>
+		<input type="text" placeholder="请输入您的姓名" name="userName">
+		<input type="text" placeholder="请留下您的手机号" name="userMobile">
+		<input type="text" placeholder="请留下您的收货地址" name="userAddress">
+		<input type="submit" value="提交" class="btn_comm">
+	</form>
+
+	<div class="submit_success">信息填写成功，<br>我们会在三个工作日内联系您！</div>
+	
+	<div id="footer">
+		<div class="btns_row" id="btnsRow1">
+			<a href="#" class="btn_comm btn_comm2 reload-trigger">重抽</a>
+			<a href="#" class="btn_comm btn_comm2" id="share-trigger">分享</a>
+			<a href="http://www.weshaketv.com/wycloud/oauth?appid=WY&redirect_url=http://1251097942.cdn.myqcloud.com/1251097942/hylld/index.html&error_url=http://1251097942.cdn.myqcloud.com/1251097942/hylld/welcome/failed.html&scope=1" class="btn_comm btn_comm2">返回</a>
+		</div>
+		
+		<div class="btns_row" id="btnsRow2">
+			<a href="http://www.weshaketv.com/wycloud/oauth?appid=WY&redirect_url=http://1251097942.cdn.myqcloud.com/1251097942/hylld/index.html&error_url=http://1251097942.cdn.myqcloud.com/1251097942/hylld/welcome/failed.html&scope=1" class="btn_comm btn_comm3">返回</a>
+			<a href="#" class="btn_comm btn_comm3 reload-trigger">重抽</a>
+		</div>
+		
+		<div class="copyright">本页面由山东卫视提供</div>
+	</div>
+
+	<div id="pop_share">
+		<div class="ps_box">
+			<div class="ps_title">邀请好友</div>
+			<p>点击右上角发送给朋友，边看《红高粱》边聊天~</p>
+			<span id="close-pop">确定</span>
+		</div>
+	</div>
+
+	<div class="loading" id="loading"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABEBAMAAADKPY6BAAAAA3NCSVQICAjb4U/gAAAAKlBMVEX///////////////////////////////////////////////////////9q+00tAAAADnRSTlMAESIzRFVmd4iZqrvM3UwhkGcAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAACdElEQVRIicXUz2vTYBgH8CetVbw1pZvslsXiBD1kDSLDS51xDvTgsEERDxu4MGSH+atBUZg/5uLAkx6WiRcv0kwvgqDLdhMUk/4BQv8Yn+d92zXt3vft0ecQkuaT933y9v0GIFNaZWkrjpuvposgqfLjVsrr03mxOPu5nXbrz32RmNrriSRNXhwUJ9NMxVj3BsXo3oCId+b6Re5DRiRMRN+NPnKZ99Fit3cTElH0NisK/PH2jweTAKWZDSaiZi1DlrlY6wydu7SNIgzf9cRhPk1mLU6QCMPeMLeYeJ6deoJI8LJ7eYh1+q3/HWdRBIHVuTpF5G//K0LuEYrgLr/Q2Jo8g4Ea2QwC/2Gm2V+DAuBG4Pu+tT9Pa/UgKawjWWCnb6gT0Sa67je823SSp04+CgSMNjzPo2ePEqmJSA6FS3fOofgtEgAz3qJLW+Ipkq9iMrLoutdwVb4gWRGTPJI6X/3EEBPNdR2nCEfaaSJpBeCM4zgGjOFG+ykjFSQWnE7jXeGqUJUdx7bgCu7VVRnJO7Y9Ccu4n+dlJHeByBMkNRnRbNuuwnsMhKEgpolkJ5J+K8CuItmOo6ZUgGkSiYaQcYiGER22hhCdSDOUt2uOI9lohqEhJToW3MFgWipShJtIrsqExshUGL6eVxGAsXA/uUKCx2MYXcEHtEvoWNgM1tekhB3zmH9ftjD8d20Jw12TDcNr1vcbC2oy0c2/vAqUf0NJKP/enJKw/NfVhPLvyv9JKsq/M60e5qLL0q2qch1JVb71sDQUFExVVVDYtnIqSjcmUznVcRIUGUU3XOgqU6Jk6mrTEap2tJI+ZBCeB7XoBuJ/1j9tdCow0Q29QQAAAABJRU5ErkJggg==" height="68" width="68" alt="" class="animate-load"></div>
+	
+
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="http://1251097942.cdn.myqcloud.com/1251097942/hylld/js/share.js?v=1.0"></script>
+	<script src="js/wScratchPad.js"></script>
+	<script src="js/choujiang.js?v=6.5"></script>
+
+</body>
+</html>
